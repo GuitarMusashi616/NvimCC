@@ -24,20 +24,20 @@ function Controller:add_event_handler(handler)
 end
 
 function Controller:notify_handlers(events)
-    for i, handler in pairs(self.handlers) do
-        handler.handle(events)
+    for i, handler in pairs(self.event_handlers) do
+        handler:handle(events)
     end
 end
 
 function Controller:open(filename)
     self.model:load_file(filename)
-    self.view:render(self.model.lines)
+    self.view:render(self.model.lines, self.model.y, self.model.y + self.model.NUM_LINES)
 
     self.view:handle_events()
 end
 
 function Controller:notify(events)
-    if #events <= 2 then
+    if not events then
         return
     end
 
@@ -47,7 +47,11 @@ function Controller:notify(events)
         self.model:update_cursor_vertical(events[2])
     elseif events[1] == "model_cursor_changed" then
         self.view:update_cursor(self.model.curX, self.model.curY)
+    elseif events[1] == "model_scrolled" then
+        self.view:render(self.model.lines, events[2], events[3])
     else
-        self.notify_handlers(events)
+        self:notify_handlers(events)
     end
 end
+
+return Controller

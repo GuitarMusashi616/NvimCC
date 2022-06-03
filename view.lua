@@ -3,6 +3,8 @@ local class = require "lib/class"
 local View = class()
 
 function View:__init(controller)
+    term.setCursorPos(1,1)
+    term.setCursorBlink(true)
     self.controller = controller
 end
 
@@ -30,7 +32,6 @@ end
 -- end
 
 function View:update_cursor(curX, curY)
-    term.setCursorBlink(true)
     term.setCursorPos(curX, curY)
 end
 
