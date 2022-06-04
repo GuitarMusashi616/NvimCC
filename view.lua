@@ -1,4 +1,5 @@
 local class = require "lib/class"
+local util = require "lib/util"
 
 local View = class()
 
@@ -8,28 +9,19 @@ function View:__init(controller)
     self.controller = controller
 end
 
-function View:render(lines, n, m)
+function View:render(lines, y1, y2, x1)
+    local x,y = term.getCursorPos()
+    local x1 = x1 or 1
     local l = 1
-    for i=n,m do
+    for y = y1, y2 do
         term.setCursorPos(1,l)
         term.clearLine()
-        term.write(lines[i])
+        local line = lines[y]:sub(x1)
+        term.write(line)
         l = l + 1
     end
+    term.setCursorPos(x,y)
 end
-
--- function View:subscribe(subscriber)
---     if not subscriber.update then
---         error(tostring(subscriber) .. " must have an update method", -1)
---     end
---     table.insert(self.subscribers, subscriber)
--- end
-
--- function View:notify(events)
---     for i, subscriber in pairs(self.subscribers) do
---        subscriber:update(events)
---     end
--- end
 
 function View:update_cursor(curX, curY)
     term.setCursorPos(curX, curY)

@@ -28,8 +28,7 @@ end
 local function class(...)
   local cls = {}
   inherit(cls, ...)
-  cls.mt = {__call = constructor}
-  return setmetatable(cls, cls.mt)
+  return setmetatable(cls, {__call = constructor})
 end
 
 return class

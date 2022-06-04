@@ -4,7 +4,7 @@ function url(file, branch, repo)
     return ("https://raw.githubusercontent.com/GuitarMusashi616/%s/%s/%s"):format(repo, branch, file)
 end
 
-local files = {"lib/class.lua", "model.lua", "view.lua", "controller.lua", "hjkl.lua", "main.lua"}
+local files = {"lib/class.lua", "model.lua", "view.lua", "controller.lua", "hjkl.lua", "nvim.lua"}
 
 for _, file in pairs(files) do
     if fs.exists(file) then
