@@ -1,6 +1,10 @@
 local t = require "lib/tbl"
 local util = {}
 
+function util.clamp(val, low, high)
+    return math.min(high, math.max(low, val))
+end
+
 function util.all(tbl)
   local prev_k = nil
   return function()

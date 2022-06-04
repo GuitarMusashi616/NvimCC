@@ -5,10 +5,12 @@ function url(file, branch, repo)
 end
 
 local libs = {"class.lua", "tbl.lua", "util.lua"}
-local mains = {"model.lua", "view.lua", "controller.lua", "hjkl.lua", "nvim.lua"}
+local mains = {"model.lua", "view.lua", "controller.lua", "hjkl.lua", "nvim.lua", "insert_mode.lua"}
 
-function dl(files)
+function dl(files, folder)
+    local folder = folder or ""
     for _, file in pairs(files) do
+        file = folder..file
         if fs.exists(file) then
             shell.run("rm "..file)
         end
@@ -23,7 +25,7 @@ end
 shell.run("mkdir lib")
 shell.run("cd lib")
 
-dl(libs)
+dl(libs, "lib/")
 
 shell.run("cd ..")
 
